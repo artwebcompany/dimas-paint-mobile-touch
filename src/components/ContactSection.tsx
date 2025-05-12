@@ -1,4 +1,3 @@
-
 import { Phone, Mail, MapPin, Send } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,7 +9,7 @@ import { useEffect, useRef } from 'react';
 declare global {
   interface Window {
     initMap: () => void;
-    google: typeof google;
+    google: any; // Use 'any' type to avoid the undefined reference error
   }
 }
 
@@ -178,12 +177,4 @@ export default function ContactSection() {
       </div>
     </section>
   );
-}
-
-// Add TypeScript interface for the global window object to handle Google Maps callback
-declare global {
-  interface Window {
-    initMap: () => void;
-    google: any;
-  }
 }
