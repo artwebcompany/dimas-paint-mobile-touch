@@ -4,9 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
+import { useEffect, useRef } from 'react';
 
 export default function ContactSection() {
   const { toast } = useToast();
+  const mapRef = useRef<HTMLDivElement>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,6 +20,54 @@ export default function ContactSection() {
     const form = e.target as HTMLFormElement;
     form.reset();
   };
+
+  useEffect(() => {
+    // Load Google Maps script
+    const googleMapsScript = document.createElement('script');
+    googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap`;
+    googleMapsScript.async = true;
+    googleMapsScript.defer = true;
+    
+    // Define the callback function that will initialize the map
+    window.initMap = function() {
+      if (!mapRef.current) return;
+      
+      const location = { lat: -7.782952, lng: 110.367012 }; // Yogyakarta coordinates
+      
+      const map = new google.maps.Map(mapRef.current, {
+        center: location,
+        zoom: 15,
+        styles: [
+          {
+            featureType: "water",
+            elementType: "geometry",
+            stylers: [{ color: "#e9e9e9" }, { lightness: 17 }],
+          },
+          {
+            featureType: "landscape",
+            elementType: "geometry",
+            stylers: [{ color: "#f5f5f5" }, { lightness: 20 }],
+          },
+        ],
+      });
+      
+      // Add a marker
+      new google.maps.Marker({
+        position: location,
+        map: map,
+        title: "Dimas Paint Jogja",
+        animation: google.maps.Animation.DROP,
+      });
+    };
+
+    document.head.appendChild(googleMapsScript);
+
+    return () => {
+      // Clean up
+      document.head.removeChild(googleMapsScript);
+      delete window.initMap;
+    };
+  }, []);
 
   return (
     <section id="contact" className="section bg-dpblue-50">
@@ -56,7 +106,7 @@ export default function ContactSection() {
             </form>
           </div>
 
-          {/* Contact Info */}
+          {/* Contact Info & Map */}
           <div>
             <div className="mb-8">
               <h3 className="text-xl font-semibold mb-4">Informasi Kontak</h3>
@@ -87,7 +137,7 @@ export default function ContactSection() {
               </ul>
             </div>
 
-            <div>
+            <div className="mb-8">
               <h3 className="text-xl font-semibold mb-4">Jam Operasional</h3>
               <div className="bg-white p-4 rounded-xl shadow-md">
                 <div className="grid grid-cols-2 gap-2">
@@ -106,9 +156,22 @@ export default function ContactSection() {
                 </div>
               </div>
             </div>
+
+            {/* Google Map */}
+            <div className="mt-6 rounded-xl overflow-hidden shadow-lg">
+              <div ref={mapRef} className="w-full h-[300px]"></div>
+            </div>
           </div>
         </div>
       </div>
     </section>
   );
+}
+
+// Add TypeScript interface for the global window object to handle Google Maps callback
+declare global {
+  interface Window {
+    initMap: () => void;
+    google: any;
+  }
 }

@@ -4,19 +4,16 @@ import { motion } from "framer-motion";
 
 export default function Hero() {
   return (
-    <section id="home" className="relative pt-20 pb-12 md:pt-24 md:pb-16 overflow-hidden">
-      {/* Background with gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-dpblue-800/80 to-dpblue-900/60 z-0"></div>
-      
-      {/* Background image */}
-      <div 
-        className="absolute inset-0 z-[-1] bg-cover bg-center opacity-60"
-        style={{ 
-          backgroundImage: "url('/hero-background.jpg')", 
-          backgroundPosition: "center"
-        }}
-      ></div>
-      
+    <section 
+      id="home" 
+      className="relative min-h-screen flex items-center pt-20 pb-12 md:pt-24 md:pb-16 overflow-hidden"
+      style={{ 
+        backgroundImage: "linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.5)), url('/src/assets/images/hero-bg.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed"
+      }}
+    >
       <div className="container mx-auto px-4 relative z-10">
         <div className="flex flex-col lg:flex-row items-center">
           <div className="w-full lg:w-1/2 text-center lg:text-left mb-8 lg:mb-0">
@@ -72,14 +69,23 @@ export default function Hero() {
             transition={{ duration: 0.5 }}
             className="w-full lg:w-1/2 flex justify-center lg:justify-end"
           >
-            <img 
-              src="/hero-image.jpg" 
-              alt="Jasa Body Repair dan Pengecatan Profesional Dimas Paint Jogja" 
-              className="rounded-xl shadow-lg w-full max-w-md object-cover"
-              onError={(e) => {
-                e.currentTarget.src = "https://images.unsplash.com/photo-1558618062-225406171cce?w=800&auto=format&fit=crop";
-              }}
-            />
+            <div className="relative rounded-xl overflow-hidden shadow-xl w-full max-w-lg aspect-video">
+              <video 
+                className="w-full h-full object-cover"
+                autoPlay 
+                muted 
+                loop
+                playsInline
+              >
+                <source src="/src/assets/videos/intro.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+              <div className="absolute bottom-4 left-4 text-white">
+                <p className="font-bold">Lihat Proses Pengecatan Kami</p>
+                <p className="text-sm text-white/80">Kualitas Premium untuk Kendaraan Anda</p>
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>
