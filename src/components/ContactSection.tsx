@@ -6,6 +6,14 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { useEffect, useRef } from 'react';
 
+// Add type declarations for Google Maps
+declare global {
+  interface Window {
+    initMap: () => void;
+    google: typeof google;
+  }
+}
+
 export default function ContactSection() {
   const { toast } = useToast();
   const mapRef = useRef<HTMLDivElement>(null);
@@ -34,7 +42,8 @@ export default function ContactSection() {
       
       const location = { lat: -7.782952, lng: 110.367012 }; // Yogyakarta coordinates
       
-      const map = new google.maps.Map(mapRef.current, {
+      // Use window.google to access the Google Maps API
+      const map = new window.google.maps.Map(mapRef.current, {
         center: location,
         zoom: 15,
         styles: [
@@ -52,19 +61,22 @@ export default function ContactSection() {
       });
       
       // Add a marker
-      new google.maps.Marker({
+      new window.google.maps.Marker({
         position: location,
         map: map,
         title: "Dimas Paint Jogja",
-        animation: google.maps.Animation.DROP,
+        animation: window.google.maps.Animation.DROP,
       });
     };
 
+    // Add script to document
     document.head.appendChild(googleMapsScript);
 
     return () => {
       // Clean up
-      document.head.removeChild(googleMapsScript);
+      if (document.head.contains(googleMapsScript)) {
+        document.head.removeChild(googleMapsScript);
+      }
       delete window.initMap;
     };
   }, []);
