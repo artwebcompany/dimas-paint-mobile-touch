@@ -5,7 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Calendar, Tag, Tool } from "lucide-react";
+import { ArrowLeft, Calendar, Tag, Wrench } from "lucide-react";
 import { motion } from "framer-motion";
 
 // Define available portfolio items
