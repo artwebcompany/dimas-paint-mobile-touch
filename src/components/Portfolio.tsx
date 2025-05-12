@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
@@ -64,10 +64,16 @@ const CATEGORIES = [
 
 export default function Portfolio() {
   const [activeCategory, setActiveCategory] = useState<ProjectCategory>('semua');
+  const navigate = useNavigate();
 
   const filteredItems = activeCategory === 'semua' 
     ? PORTFOLIO_ITEMS 
     : PORTFOLIO_ITEMS.filter(item => item.category === activeCategory);
+
+  // Handler to navigate to portfolio detail
+  const handleViewDetail = (id: string) => {
+    navigate(`/portfolio/${id}`);
+  };
 
   return (
     <section id="portfolio" className="section bg-gradient-to-b from-dpblue-50 to-white">
@@ -132,11 +138,17 @@ export default function Portfolio() {
                       <h3 className="font-semibold text-lg mb-1">{item.title}</h3>
                       <p className="text-sm text-muted-foreground mb-3">{item.description}</p>
                       <div className="flex justify-end">
-                        <Link to={`/portfolio/${item.id}`}>
-                          <Button variant="outline" size="sm" className="text-dpblue-600 border-dpblue-300 hover:bg-dpblue-50">
-                            Lihat Detail
-                          </Button>
-                        </Link>
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="text-dpblue-600 border-dpblue-300 hover:bg-dpblue-50"
+                          onClick={(e) => {
+                            e.stopPropagation(); // Prevent dialog from opening
+                            handleViewDetail(item.id);
+                          }}
+                        >
+                          Lihat Detail
+                        </Button>
                       </div>
                     </div>
                   </div>
@@ -154,9 +166,14 @@ export default function Portfolio() {
                   <h3 className="text-xl font-bold mt-4">{item.title}</h3>
                   <p className="text-muted-foreground">{item.description}</p>
                   <div className="flex justify-end mt-4">
-                    <Link to={`/portfolio/${item.id}`}>
-                      <Button className="bg-dpblue-500 hover:bg-dpblue-600">Lihat Detail</Button>
-                    </Link>
+                    <Button 
+                      className="bg-dpblue-500 hover:bg-dpblue-600"
+                      onClick={() => {
+                        handleViewDetail(item.id);
+                      }}
+                    >
+                      Lihat Detail
+                    </Button>
                   </div>
                 </DialogContent>
               </Dialog>
