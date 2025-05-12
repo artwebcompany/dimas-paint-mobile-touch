@@ -1,5 +1,5 @@
 
-import { WhatsApp } from 'lucide-react';
+import { MessageCircle } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
 interface WhatsAppButtonProps {
@@ -29,7 +29,7 @@ export default function WhatsAppButton({
       size="icon"
       aria-label="Chat via WhatsApp"
     >
-      <WhatsApp size={28} className="text-white" />
+      <MessageCircle size={28} className="text-white" />
     </Button>
   );
 }

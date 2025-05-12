@@ -1,5 +1,5 @@
 
-import { FacebookIcon, InstagramIcon, WhatsApp } from 'lucide-react';
+import { FacebookIcon, InstagramIcon, MessageCircle } from 'lucide-react';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -22,7 +22,7 @@ export default function Footer() {
                 <InstagramIcon size={20} />
               </a>
               <a href="https://wa.me/6281573635143" className="text-gray-300 hover:text-white">
-                <WhatsApp size={20} />
+                <MessageCircle size={20} />
               </a>
             </div>
           </div>
