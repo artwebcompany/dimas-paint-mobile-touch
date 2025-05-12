@@ -162,7 +162,7 @@ export default function PortfolioDetail() {
                 <span>{portfolio.category === 'khusus' ? 'Special' : portfolio.category === 'interior' ? 'Interior' : 'Eksterior'}</span>
               </div>
               <div className="flex items-center gap-2 bg-dpblue-100/60 text-dpblue-700 py-1 px-3 rounded-full">
-                <Tool size={16} />
+                <Wrench size={16} />
                 <span>{portfolio.tools}</span>
               </div>
             </div>
